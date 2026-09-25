@@ -5,11 +5,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -61,7 +59,6 @@ public class BurgerTest {
         burger.addIngredient(sauce);
         burger.addIngredient(filling);
         burger.addIngredient(extraSauce);
-
         assertEquals(sauce, burger.ingredients.get(0));
     }
 
@@ -70,7 +67,6 @@ public class BurgerTest {
         burger.addIngredient(sauce);
         burger.addIngredient(filling);
         burger.addIngredient(extraSauce);
-
         assertEquals(filling, burger.ingredients.get(1));
     }
 
@@ -79,7 +75,6 @@ public class BurgerTest {
         burger.addIngredient(sauce);
         burger.addIngredient(filling);
         burger.addIngredient(extraSauce);
-
         assertEquals(extraSauce, burger.ingredients.get(2));
     }
 
@@ -88,9 +83,7 @@ public class BurgerTest {
         burger.addIngredient(sauce);
         burger.addIngredient(filling);
         burger.addIngredient(extraSauce);
-
         burger.removeIngredient(1);
-
         assertEquals(2, burger.ingredients.size());
     }
 
@@ -99,9 +92,7 @@ public class BurgerTest {
         burger.addIngredient(sauce);
         burger.addIngredient(filling);
         burger.addIngredient(extraSauce);
-
         burger.removeIngredient(1);
-
         assertEquals(extraSauce, burger.ingredients.get(1));
     }
 
@@ -109,9 +100,7 @@ public class BurgerTest {
     public void removeIngredientFirstDecreasesSize() {
         burger.addIngredient(sauce);
         burger.addIngredient(filling);
-
         burger.removeIngredient(0);
-
         assertEquals(1, burger.ingredients.size());
     }
 
@@ -119,9 +108,7 @@ public class BurgerTest {
     public void removeIngredientFirstRemovesCorrectItem() {
         burger.addIngredient(sauce);
         burger.addIngredient(filling);
-
         burger.removeIngredient(0);
-
         assertEquals(filling, burger.ingredients.get(0));
     }
 
@@ -129,9 +116,7 @@ public class BurgerTest {
     public void removeIngredientLastDecreasesSize() {
         burger.addIngredient(sauce);
         burger.addIngredient(filling);
-
         burger.removeIngredient(1);
-
         assertEquals(1, burger.ingredients.size());
     }
 
@@ -139,57 +124,95 @@ public class BurgerTest {
     public void removeIngredientLastRemovesCorrectItem() {
         burger.addIngredient(sauce);
         burger.addIngredient(filling);
-
         burger.removeIngredient(1);
-
         assertEquals(sauce, burger.ingredients.get(0));
     }
 
     @Test
-    public void moveIngredientForwardChangesOrder() {
+    public void moveIngredientForwardIndex0IsFilling() {
         burger.addIngredient(sauce);
         burger.addIngredient(filling);
         burger.addIngredient(extraSauce);
-
         burger.moveIngredient(0, 2);
-
         assertEquals(filling, burger.ingredients.get(0));
+    }
+
+    @Test
+    public void moveIngredientForwardIndex1IsExtraSauce() {
+        burger.addIngredient(sauce);
+        burger.addIngredient(filling);
+        burger.addIngredient(extraSauce);
+        burger.moveIngredient(0, 2);
         assertEquals(extraSauce, burger.ingredients.get(1));
+    }
+
+    @Test
+    public void moveIngredientForwardIndex2IsSauce() {
+        burger.addIngredient(sauce);
+        burger.addIngredient(filling);
+        burger.addIngredient(extraSauce);
+        burger.moveIngredient(0, 2);
         assertEquals(sauce, burger.ingredients.get(2));
     }
 
     @Test
-    public void moveIngredientBackwardChangesOrder() {
+    public void moveIngredientBackwardIndex0IsExtraSauce() {
         burger.addIngredient(sauce);
         burger.addIngredient(filling);
         burger.addIngredient(extraSauce);
-
         burger.moveIngredient(2, 0);
-
         assertEquals(extraSauce, burger.ingredients.get(0));
+    }
+
+    @Test
+    public void moveIngredientBackwardIndex1IsSauce() {
+        burger.addIngredient(sauce);
+        burger.addIngredient(filling);
+        burger.addIngredient(extraSauce);
+        burger.moveIngredient(2, 0);
         assertEquals(sauce, burger.ingredients.get(1));
+    }
+
+    @Test
+    public void moveIngredientBackwardIndex2IsFilling() {
+        burger.addIngredient(sauce);
+        burger.addIngredient(filling);
+        burger.addIngredient(extraSauce);
+        burger.moveIngredient(2, 0);
         assertEquals(filling, burger.ingredients.get(2));
     }
 
     @Test
-    public void moveIngredientToMiddleChangesOrder() {
+    public void moveIngredientToMiddleIndex0IsFilling() {
         burger.addIngredient(sauce);
         burger.addIngredient(filling);
         burger.addIngredient(extraSauce);
-
         burger.moveIngredient(0, 1);
-
         assertEquals(filling, burger.ingredients.get(0));
+    }
+
+    @Test
+    public void moveIngredientToMiddleIndex1IsSauce() {
+        burger.addIngredient(sauce);
+        burger.addIngredient(filling);
+        burger.addIngredient(extraSauce);
+        burger.moveIngredient(0, 1);
         assertEquals(sauce, burger.ingredients.get(1));
+    }
+
+    @Test
+    public void moveIngredientToMiddleIndex2IsExtraSauce() {
+        burger.addIngredient(sauce);
+        burger.addIngredient(filling);
+        burger.addIngredient(extraSauce);
+        burger.moveIngredient(0, 1);
         assertEquals(extraSauce, burger.ingredients.get(2));
     }
 
     @Test
     public void getPriceOnlyBun() {
         when(bun.getPrice()).thenReturn(100.0f);
-
         burger.setBuns(bun);
-
         assertEquals(200.0f, burger.getPrice(), 0.001f);
     }
 
@@ -198,11 +221,9 @@ public class BurgerTest {
         when(bun.getPrice()).thenReturn(100.0f);
         when(sauce.getPrice()).thenReturn(50.0f);
         when(filling.getPrice()).thenReturn(75.0f);
-
         burger.setBuns(bun);
         burger.addIngredient(sauce);
         burger.addIngredient(filling);
-
         assertEquals(325.0f, burger.getPrice(), 0.001f);
     }
 
@@ -210,10 +231,8 @@ public class BurgerTest {
     public void getPriceZeroValues() {
         when(bun.getPrice()).thenReturn(0.0f);
         when(sauce.getPrice()).thenReturn(0.0f);
-
         burger.setBuns(bun);
         burger.addIngredient(sauce);
-
         assertEquals(0.0f, burger.getPrice(), 0.001f);
     }
 
@@ -268,11 +287,8 @@ public class BurgerTest {
     public void getReceiptContainsBunNameTopAndBottom() {
         when(bun.getName()).thenReturn("black bun");
         when(bun.getPrice()).thenReturn(100.0f);
-
         burger.setBuns(bun);
-
         String receipt = burger.getReceipt();
-
         assertTrue(receipt.contains("(==== black bun ====)"));
     }
 
@@ -283,12 +299,9 @@ public class BurgerTest {
         when(sauce.getName()).thenReturn("hot sauce");
         when(sauce.getType()).thenReturn(IngredientType.SAUCE);
         when(sauce.getPrice()).thenReturn(100.0f);
-
         burger.setBuns(bun);
         burger.addIngredient(sauce);
-
         String receipt = burger.getReceipt();
-
         assertTrue(receipt.contains("hot sauce"));
     }
 
@@ -299,64 +312,84 @@ public class BurgerTest {
         when(filling.getName()).thenReturn("cutlet");
         when(filling.getType()).thenReturn(IngredientType.FILLING);
         when(filling.getPrice()).thenReturn(200.0f);
-
         burger.setBuns(bun);
         burger.addIngredient(filling);
-
         String receipt = burger.getReceipt();
-
         assertTrue(receipt.contains("cutlet"));
     }
 
     @Test
-    public void getReceiptIngredientTypeLowerCase() {
+    public void getReceiptIngredientTypeLowerCaseContainsLowercase() {
         when(bun.getName()).thenReturn("red bun");
         when(bun.getPrice()).thenReturn(300.0f);
         when(sauce.getName()).thenReturn("chili sauce");
         when(sauce.getType()).thenReturn(IngredientType.SAUCE);
         when(sauce.getPrice()).thenReturn(300.0f);
-
         burger.setBuns(bun);
         burger.addIngredient(sauce);
-
         String receipt = burger.getReceipt();
-
         assertTrue(receipt.contains("= sauce chili sauce ="));
+    }
+
+    @Test
+    public void getReceiptIngredientTypeDoesNotContainUppercase() {
+        when(bun.getName()).thenReturn("red bun");
+        when(bun.getPrice()).thenReturn(300.0f);
+        when(sauce.getName()).thenReturn("chili sauce");
+        when(sauce.getType()).thenReturn(IngredientType.SAUCE);
+        when(sauce.getPrice()).thenReturn(300.0f);
+        burger.setBuns(bun);
+        burger.addIngredient(sauce);
+        String receipt = burger.getReceipt();
         assertFalse(receipt.contains("SAUCE"));
     }
 
     @Test
-    public void getReceiptContainsPriceLine() {
+    public void getReceiptContainsPriceLabel() {
         when(bun.getName()).thenReturn("black bun");
         when(bun.getPrice()).thenReturn(100.0f);
         when(sauce.getName()).thenReturn("hot sauce");
         when(sauce.getType()).thenReturn(IngredientType.SAUCE);
         when(sauce.getPrice()).thenReturn(100.0f);
-
         burger.setBuns(bun);
         burger.addIngredient(sauce);
-
         String receipt = burger.getReceipt();
-
         assertTrue(receipt.contains("Price:"));
+    }
+
+    @Test
+    public void getReceiptContainsPriceValue() {
+        when(bun.getName()).thenReturn("black bun");
+        when(bun.getPrice()).thenReturn(100.0f);
+        when(sauce.getName()).thenReturn("hot sauce");
+        when(sauce.getType()).thenReturn(IngredientType.SAUCE);
+        when(sauce.getPrice()).thenReturn(100.0f);
+        burger.setBuns(bun);
+        burger.addIngredient(sauce);
+        String receipt = burger.getReceipt();
         assertTrue(receipt.contains("300"));
     }
 
     @Test
-    public void getReceiptWithoutIngredients() {
+    public void getReceiptWithoutIngredientsContainsBunName() {
         when(bun.getName()).thenReturn("white bun");
         when(bun.getPrice()).thenReturn(200.0f);
-
         burger.setBuns(bun);
-
         String receipt = burger.getReceipt();
-
         assertTrue(receipt.contains("white bun"));
+    }
+
+    @Test
+    public void getReceiptWithoutIngredientsContainsPrice() {
+        when(bun.getName()).thenReturn("white bun");
+        when(bun.getPrice()).thenReturn(200.0f);
+        burger.setBuns(bun);
+        String receipt = burger.getReceipt();
         assertTrue(receipt.contains("Price: 400"));
     }
 
     @Test
-    public void getReceiptMultipleIngredientTypes() {
+    public void getReceiptMultipleIngredientTypesContainsSauce() {
         when(bun.getName()).thenReturn("black bun");
         when(bun.getPrice()).thenReturn(100.0f);
         when(sauce.getName()).thenReturn("sour cream");
@@ -365,14 +398,27 @@ public class BurgerTest {
         when(filling.getName()).thenReturn("dinosaur");
         when(filling.getType()).thenReturn(IngredientType.FILLING);
         when(filling.getPrice()).thenReturn(200.0f);
-
         burger.setBuns(bun);
         burger.addIngredient(sauce);
         burger.addIngredient(filling);
-
         String receipt = burger.getReceipt();
-
         assertTrue(receipt.contains("= sauce sour cream ="));
+    }
+
+    @Test
+    public void getReceiptMultipleIngredientTypesContainsFilling() {
+        when(bun.getName()).thenReturn("black bun");
+        when(bun.getPrice()).thenReturn(100.0f);
+        when(sauce.getName()).thenReturn("sour cream");
+        when(sauce.getType()).thenReturn(IngredientType.SAUCE);
+        when(sauce.getPrice()).thenReturn(200.0f);
+        when(filling.getName()).thenReturn("dinosaur");
+        when(filling.getType()).thenReturn(IngredientType.FILLING);
+        when(filling.getPrice()).thenReturn(200.0f);
+        burger.setBuns(bun);
+        burger.addIngredient(sauce);
+        burger.addIngredient(filling);
+        String receipt = burger.getReceipt();
         assertTrue(receipt.contains("= filling dinosaur ="));
     }
 }
